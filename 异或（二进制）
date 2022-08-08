@@ -1,0 +1,55 @@
+//异位交换数值，不建议使用（相同数得0）
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+void BinaryConversion( int a, int arr[]);
+void MemeryCopy(int arr[]);
+int main() {
+	int a, b, arr[32]={0};
+	scanf("%d %d", &a, &b);
+	BinaryConversion(a, arr);
+	BinaryConversion(b,arr);
+	a=a^b;
+	  BinaryConversion(a, arr);
+	b=a^b;
+	  BinaryConversion(b, arr);
+	a=a^b;
+	  BinaryConversion(a, arr);
+	return 0;
+}
+void BinaryConversion( int a, int arr[]){
+    int b=pow(2, 30);
+    int t=a;
+    int tem, i;
+    if(a<0){
+        arr[31]=1;
+        a=-a;
+    }
+    if(a>b){
+        arr[30]=1;
+        a-=b;
+    }
+    while(a>0){
+        tem=0;
+        for(i=0; tem<=a; i++){
+            tem=pow(2,i);
+        }
+        i-=2;
+        arr[i]=1;
+        tem/=2;
+        a-=tem;
+    }
+    printf("%-3d的二进制：", t);
+    for(i=31; i>=0; i--){
+        printf("%d", arr[i]);
+        if(i%4==0){
+            printf(" ");
+        }
+    }
+    printf("\n");
+    MemeryCopy(arr);
+}
+void MemeryCopy(int arr[]){
+    int arr1[32]={0};
+    memcpy(arr, arr1, sizeof(arr1));
+}
